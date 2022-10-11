@@ -29,6 +29,8 @@ class FirstRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Appcues.screen('First Page');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Route'),
@@ -37,6 +39,7 @@ class FirstRoute extends StatelessWidget {
         child: ElevatedButton(
           child: const Text('Open route'),
           onPressed: () {
+            Appcues.track('Open button was clicked');
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -55,6 +58,8 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Appcues.screen('Second Page');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Second Route'),
@@ -62,6 +67,7 @@ class SecondRoute extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
+            Appcues.track('Back button was clicked');
             Navigator.pop(context);
           },
           child: const Text('Go back!'),
