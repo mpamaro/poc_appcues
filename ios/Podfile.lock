@@ -1,0 +1,29 @@
+PODS:
+  - Appcues (1.0.0)
+  - appcues_flutter (1.0.2):
+    - Appcues
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - appcues_flutter (from `.symlinks/plugins/appcues_flutter/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - Appcues
+
+EXTERNAL SOURCES:
+  appcues_flutter:
+    :path: ".symlinks/plugins/appcues_flutter/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  Appcues: 39d82344747e19ef6dc71b818460e8caf7f21477
+  appcues_flutter: 0597c00581c3eb69af156cba9aeda80f8fa0d437
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
+
+COCOAPODS: 1.11.3
