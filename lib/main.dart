@@ -1,6 +1,12 @@
+import 'package:appcues_flutter/appcues_flutter.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initializing Appcues SDK.
+  await Appcues.initialize('39569', 'APPCUES_APPLICATION_ID');
+
   runApp(const MyApp());
 }
 
