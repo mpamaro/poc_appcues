@@ -1,5 +1,6 @@
 import 'package:appcues_flutter/appcues_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_links/uni_links.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +14,17 @@ void main() async {
     {
       'Company': 'Take Blip',
       'Repository': 'https://github.com/mpamaro/poc_appcues',
+    },
+  );
+
+  // Detect if a new deeplink was sent to the app
+  // xcrun simctl openurl booted "appcues-APPCUES_APPLICATION_ID://sdk/debugger"
+  uriLinkStream.listen(
+    (Uri? uri) async {
+      if (uri != null) {
+        // Pass along to Appcues to potentially handle
+        await Appcues.didHandleURL(uri);
+      }
     },
   );
 
