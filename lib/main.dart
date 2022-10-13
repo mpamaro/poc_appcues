@@ -33,9 +33,12 @@ void main() async {
   await Appcues.debug();
 
   runApp(
-    const MaterialApp(
+    MaterialApp(
       title: 'POC Appcues',
-      home: FirstRoute(),
+      home: const FirstRoute(),
+      theme: ThemeData(
+        fontFamily: 'NunitoSans',
+      ),
     ),
   );
 }
