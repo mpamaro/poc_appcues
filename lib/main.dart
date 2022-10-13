@@ -2,36 +2,7 @@ import 'package:appcues_flutter/appcues_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_links/uni_links.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Initializing Appcues SDK.
-  await Appcues.initialize('39569', 'bfe534cb-5e28-4fdf-9ff5-1907ea195dc1');
-
-  // Identify an Appcues user.
-  await Appcues.identify(
-    'flutter-user-1',
-    {
-      'Company': 'Take Blip',
-      'Repository': 'https://github.com/mpamaro/poc_appcues',
-    },
-  );
-
-  // Detect if a new deeplink was sent to the app
-  // xcrun simctl openurl booted "appcues-bfe534cb-5e28-4fdf-9ff5-1907ea195dc1://sdk/debugger"
-  uriLinkStream.listen(
-    (Uri? uri) async {
-      if (uri != null) {
-        // Pass along to Appcues to potentially handle
-        final handled = await Appcues.didHandleURL(uri);
-
-        print(handled);
-      }
-    },
-  );
-
-  await Appcues.debug();
-
+void main() {
   runApp(
     MaterialApp(
       title: 'POC Appcues',
@@ -43,8 +14,58 @@ void main() async {
   );
 }
 
-class FirstRoute extends StatelessWidget {
+class FirstRoute extends StatefulWidget {
   const FirstRoute({super.key});
+
+  @override
+  State<FirstRoute> createState() => _FirstRouteState();
+}
+
+class _FirstRouteState extends State<FirstRoute> {
+  String _debugText = 'Não chegou URI!';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initializing Appcues SDK.
+    Appcues.initialize('39569', 'bfe534cb-5e28-4fdf-9ff5-1907ea195dc1');
+
+    // Identify an Appcues user.
+    Appcues.identify(
+      'flutter-user-1',
+      {
+        'Company': 'Take Blip',
+        'Repository': 'https://github.com/mpamaro/poc_appcues',
+      },
+    );
+
+    // Detect if the app was started by a deeplink
+    getInitialUri().then(
+      (value) => _handleDeepLink(value),
+    );
+
+    // Detect if a new deeplink was sent to the app
+    // xcrun simctl openurl booted "appcues-bfe534cb-5e28-4fdf-9ff5-1907ea195dc1://sdk/debugger"
+    uriLinkStream.listen(_handleDeepLink);
+
+    Appcues.debug();
+  }
+
+  Future<void> _handleDeepLink(Uri? uri) async {
+    if (uri != null) {
+      // Pass along to Appcues to potentially handle
+      final handled = await Appcues.didHandleURL(uri);
+
+      setState(() {
+        _debugText = 'Chegou URI: $handled - $uri';
+      });
+    } else {
+      setState(() {
+        _debugText = 'Chegou URI, mas está nulo!';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,19 +75,28 @@ class FirstRoute extends StatelessWidget {
       appBar: AppBar(
         title: const Text('First Route'),
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Open route'),
-          onPressed: () {
-            Appcues.track('Open button was clicked');
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SecondRoute(),
-              ),
-            );
-          },
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: SelectableText(_debugText),
+          ),
+          const SizedBox(
+            height: 10.0,
+          ),
+          ElevatedButton(
+            child: const Text('Open route'),
+            onPressed: () {
+              Appcues.track('Open button was clicked');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SecondRoute(),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
