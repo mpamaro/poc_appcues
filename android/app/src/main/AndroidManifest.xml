@@ -27,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
-                <data android:scheme="appcues-APPCUES_APPLICATION_ID" />
+                <data android:scheme="appcues-bfe534cb-5e28-4fdf-9ff5-1907ea195dc1" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

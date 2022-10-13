@@ -11,7 +11,7 @@
 			<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>appcues-APPCUES_APPLICATION_ID</string>
+				<string>appcues-bfe534cb-5e28-4fdf-9ff5-1907ea195dc1</string>
 			</array>
 		</dict>
 	</array>

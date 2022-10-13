@@ -6,7 +6,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initializing Appcues SDK.
-  await Appcues.initialize('39569', 'APPCUES_APPLICATION_ID');
+  await Appcues.initialize('39569', 'bfe534cb-5e28-4fdf-9ff5-1907ea195dc1');
 
   // Identify an Appcues user.
   await Appcues.identify(
@@ -18,15 +18,19 @@ void main() async {
   );
 
   // Detect if a new deeplink was sent to the app
-  // xcrun simctl openurl booted "appcues-APPCUES_APPLICATION_ID://sdk/debugger"
+  // xcrun simctl openurl booted "appcues-bfe534cb-5e28-4fdf-9ff5-1907ea195dc1://sdk/debugger"
   uriLinkStream.listen(
     (Uri? uri) async {
       if (uri != null) {
         // Pass along to Appcues to potentially handle
-        await Appcues.didHandleURL(uri);
+        final handled = await Appcues.didHandleURL(uri);
+
+        print(handled);
       }
     },
   );
+
+  await Appcues.debug();
 
   runApp(
     const MaterialApp(
@@ -71,6 +75,8 @@ class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Appcues.screen('Second Page');
+
+    // Appcues.show('64b8a1bb-c774-4303-bfdb-bfcaaa0c034e');
 
     return Scaffold(
       appBar: AppBar(
